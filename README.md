@@ -72,6 +72,39 @@ pip install -r requirements.txt
 
 Note: This will download PySpark 4.0.0 and its dependencies, which may take a few minutes.
 
+### 4. Download Required JAR Files
+
+Download the necessary Hadoop and AWS SDK JAR files for S3 connectivity:
+
+```bash
+./setup_jars.sh
+```
+
+This script will download:
+- `hadoop-aws-3.4.0.jar` - Hadoop S3A filesystem implementation
+- `aws-java-sdk-bundle-1.12.262.jar` - AWS SDK v1
+- `bundle-2.28.21.jar` - AWS SDK v2
+
+The JARs will be placed in the `jars/` directory (~830 MB total).
+
+## Quick Start
+
+After completing the setup steps above, you can run:
+
+```bash
+# Start MinIO
+docker-compose up -d
+
+# Create bucket (optional - will be created automatically on first use)
+python setup_minio.py
+
+# Run the demo
+python spark_delta_s3.py
+
+# Or run the test
+python test_delta_s3.py
+```
+
 ## Usage
 
 ### Running the Main Demo

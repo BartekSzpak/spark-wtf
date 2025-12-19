@@ -12,6 +12,18 @@ def create_spark_session(app_name="DeltaLakeS3Demo"):
     Create and configure a Spark session with Delta Lake and S3 support.
     All configuration is done in Python without external configuration files.
     """
+    import os
+    
+    # Get the directory where this script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    jars_dir = os.path.join(script_dir, "jars")
+    
+    # Build jar paths
+    hadoop_aws_jar = os.path.join(jars_dir, "hadoop-aws-3.4.0.jar")
+    aws_sdk_v1_jar = os.path.join(jars_dir, "aws-java-sdk-bundle-1.12.262.jar")
+    aws_sdk_v2_jar = os.path.join(jars_dir, "bundle-2.28.21.jar")
+    jars_list = f"{hadoop_aws_jar},{aws_sdk_v1_jar},{aws_sdk_v2_jar}"
+    
     builder = SparkSession.builder \
         .appName(app_name) \
         .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
@@ -23,7 +35,7 @@ def create_spark_session(app_name="DeltaLakeS3Demo"):
         .config("spark.hadoop.fs.s3a.connection.ssl.enabled", "false") \
         .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
         .config("spark.hadoop.fs.s3a.aws.credentials.provider", "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider") \
-        .config("spark.jars.packages", "io.delta:delta-spark_2.12:3.2.1,org.apache.hadoop:hadoop-aws:3.3.4")
+        .config("spark.jars", jars_list)
     
     spark = configure_spark_with_delta_pip(builder).getOrCreate()
     return spark

@@ -40,6 +40,9 @@ derby.log
 metastore_db/
 spark-warehouse/
 
+# JAR files (downloaded at setup)
+jars/
+
 # OS
 .DS_Store
 Thumbs.db
