@@ -223,7 +223,7 @@ docker-compose down -v
 ## Dependencies
 
 - **pyspark**: 4.0.0 - Apache Spark Python API
-- **delta-spark**: 3.2.1 - Delta Lake library for PySpark
+- **delta-spark**: 4.0.0 - Delta Lake library for PySpark
 - **boto3**: 1.35.76 - AWS SDK for Python (for S3 compatibility)
 
 ## License
